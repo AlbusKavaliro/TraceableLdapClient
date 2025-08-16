@@ -1,0 +1,25 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>TempMaiSe Team</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>https://github.com/TempMaiSe/TraceableLdapClient/blob/main/CHANGELOG.md</PackageReleaseNotes>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RepositoryUrl>https://github.com/TempMaiSe/TraceableLdapClient.git</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryBranch>main</RepositoryBranch>
+    <RepositoryCommit>4b7e829e13e4f316baa07e1b9fca5c033fa3d525</RepositoryCommit>
+    <Version>0.0.1</Version>
+  </PropertyGroup>
+
+</Project>
