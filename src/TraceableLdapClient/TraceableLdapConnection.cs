@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.DirectoryServices.Protocols;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 
 namespace TraceableLdapClient;
 
@@ -35,7 +36,7 @@ public class TraceableLdapConnection : ILdapConnection
         set => _inner.AutoBind = value;
     }
 
-    public System.Security.Cryptography.X509Certificates.X509CertificateCollection ClientCertificates => _inner.ClientCertificates;
+    public X509CertificateCollection ClientCertificates => _inner.ClientCertificates;
 
 #pragma warning disable S2376 // Setter-only property for compatibility with LdapConnection
     public NetworkCredential Credential
