@@ -52,12 +52,14 @@ public static class Extensions
             logging.IncludeScopes = true;
         });
 
+        const string ldapConnectionInstrumentation = "TraceableLdapClient.LdapConnection";
         builder.Services.AddOpenTelemetry()
             .WithMetrics(metrics =>
             {
                 metrics.AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
-                    .AddRuntimeInstrumentation();
+                    .AddRuntimeInstrumentation()
+                    .AddMeter(ldapConnectionInstrumentation);
             })
             .WithTracing(tracing =>
             {
@@ -70,7 +72,8 @@ public static class Extensions
                     )
                     // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
                     //.AddGrpcClientInstrumentation()
-                    .AddHttpClientInstrumentation();
+                    .AddHttpClientInstrumentation()
+                    .AddSource(ldapConnectionInstrumentation);
             });
 
         builder.AddOpenTelemetryExporters();

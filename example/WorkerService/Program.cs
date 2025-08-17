@@ -1,3 +1,4 @@
+using TraceableLdapClient;
 using WorkerService;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
