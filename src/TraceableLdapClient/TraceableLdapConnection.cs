@@ -100,7 +100,7 @@ public class TraceableLdapConnection : ILdapConnection
 
     public void Bind(NetworkCredential newCredential)
     {
-        Activity? activity = StartActivity(nameof(Bind));
+        using Activity? activity = StartActivity(nameof(Bind));
         long start = Stopwatch.GetTimestamp();
         s_requestCounter.Add(1);
         activity?.SetTag(OtelTags.Username, newCredential?.UserName);
@@ -123,7 +123,7 @@ public class TraceableLdapConnection : ILdapConnection
 
     public DirectoryResponse SendRequest(DirectoryRequest request)
     {
-        Activity? activity = StartActivity(nameof(SendRequest));
+        using Activity? activity = StartActivity(nameof(SendRequest));
         long start = Stopwatch.GetTimestamp();
         s_requestCounter.Add(1);
         ArgumentNullException.ThrowIfNull(request);
@@ -154,7 +154,7 @@ public class TraceableLdapConnection : ILdapConnection
 
     public DirectoryResponse SendRequest(DirectoryRequest request, TimeSpan requestTimeout)
     {
-        Activity? activity = StartActivity(nameof(SendRequest));
+        using Activity? activity = StartActivity(nameof(SendRequest));
         long start = Stopwatch.GetTimestamp();
         s_requestCounter.Add(1);
         ArgumentNullException.ThrowIfNull(request);
