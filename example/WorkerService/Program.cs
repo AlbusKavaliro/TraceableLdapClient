@@ -7,8 +7,8 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
 builder.Services.AddSingleton<ILdapConnection>(provider =>
 {
-    return new TraceableLdapConnection(new LdapDirectoryIdentifier("ldap", 389),
-        new NetworkCredential("admin", "admin"), AuthType.Basic)
+    return new TraceableLdapConnection(new LdapDirectoryIdentifier("ldap", 3890),
+        new NetworkCredential("admin", "adminPas$word"), AuthType.Basic)
     {
         AutoBind = true,
         Timeout = TimeSpan.FromSeconds(30)
