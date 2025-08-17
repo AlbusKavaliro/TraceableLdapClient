@@ -1,5 +1,4 @@
 using System.DirectoryServices.Protocols;
-using System.Net;
 using TraceableLdapClient;
 
 namespace WorkerService;
@@ -8,10 +7,14 @@ internal class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
 
-    public Worker(ILogger<Worker> logger)
+    private readonly ILdapConnection _ldapConnection;
+
+    public Worker(ILogger<Worker> logger, ILdapConnection ldapConnection)
     {
         ArgumentNullException.ThrowIfNull(logger);
+        ArgumentNullException.ThrowIfNull(ldapConnection);
         _logger = logger;
+        _ldapConnection = ldapConnection;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -23,9 +26,7 @@ internal class Worker : BackgroundService
                 try
                 {
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                    using TraceableLdapConnection c = new(new LdapDirectoryIdentifier("ldap", 389));
-                    c.Credential = new NetworkCredential("admin", "admin");
-                    DirectoryResponse r = c.SendRequest(new SearchRequest(
+                    DirectoryResponse r = _ldapConnection.SendRequest(new SearchRequest(
                         "dc=example,dc=com",
                         "(objectClass=*)",
                         SearchScope.Subtree,
