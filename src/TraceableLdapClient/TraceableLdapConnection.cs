@@ -78,7 +78,7 @@ public class TraceableLdapConnection : ILdapConnection
 
     public void Bind()
     {
-        Activity? activity = StartActivity(nameof(Bind));
+        Activity? activity = StartActivity(OtelOperations.Bind);
         long start = Stopwatch.GetTimestamp();
         s_requestCounter.Add(1);
         try
@@ -100,7 +100,7 @@ public class TraceableLdapConnection : ILdapConnection
 
     public void Bind(NetworkCredential newCredential)
     {
-        using Activity? activity = StartActivity(nameof(Bind));
+        using Activity? activity = StartActivity(OtelOperations.Bind);
         long start = Stopwatch.GetTimestamp();
         s_requestCounter.Add(1);
         activity?.SetTag(OtelTags.Username, newCredential?.UserName);
@@ -123,7 +123,7 @@ public class TraceableLdapConnection : ILdapConnection
 
     public DirectoryResponse SendRequest(DirectoryRequest request)
     {
-        using Activity? activity = StartActivity(nameof(SendRequest));
+        using Activity? activity = StartActivity(request);
         long start = Stopwatch.GetTimestamp();
         s_requestCounter.Add(1);
         ArgumentNullException.ThrowIfNull(request);
@@ -133,11 +133,14 @@ public class TraceableLdapConnection : ILdapConnection
         {
             DirectoryResponse response = _inner.SendRequest(request);
             activity?.SetTag(OtelTags.ResponseType, response.GetType().Name);
+            activity?.SetTag(OtelTags.ResultCode, response.ResultCode.ToString());
+            activity?.SetTag(OtelTags.ErrorMessage, response.ErrorMessage);
             activity?.SetStatus(ActivityStatusCode.Ok);
             if (response is SearchResponse searchResponse)
             {
                 s_searchEntryCounter.Add(searchResponse.Entries.Count);
             }
+
             return response;
         }
         catch (Exception ex)
@@ -154,7 +157,7 @@ public class TraceableLdapConnection : ILdapConnection
 
     public DirectoryResponse SendRequest(DirectoryRequest request, TimeSpan requestTimeout)
     {
-        using Activity? activity = StartActivity(nameof(SendRequest));
+        using Activity? activity = StartActivity(request);
         long start = Stopwatch.GetTimestamp();
         s_requestCounter.Add(1);
         ArgumentNullException.ThrowIfNull(request);
@@ -164,6 +167,8 @@ public class TraceableLdapConnection : ILdapConnection
         {
             DirectoryResponse response = _inner.SendRequest(request, requestTimeout);
             activity?.SetTag(OtelTags.ResponseType, response.GetType().Name);
+            activity?.SetTag(OtelTags.ResultCode, response.ResultCode.ToString());
+            activity?.SetTag(OtelTags.ErrorMessage, response.ErrorMessage);
             activity?.SetStatus(ActivityStatusCode.Ok);
             if (response is SearchResponse searchResponse)
             {
@@ -186,7 +191,7 @@ public class TraceableLdapConnection : ILdapConnection
     public IAsyncResult BeginSendRequest(DirectoryRequest request, PartialResultProcessing partialMode, AsyncCallback callback, object state)
     {
         ArgumentNullException.ThrowIfNull(request);
-        Activity? activity = StartActivity(nameof(SendRequest));
+        Activity? activity = StartActivity(request);
         long start = Stopwatch.GetTimestamp();
         s_requestCounter.Add(1);
         activity?.SetTag(OtelTags.RequestType, request.GetType().Name);
@@ -207,7 +212,7 @@ public class TraceableLdapConnection : ILdapConnection
     public IAsyncResult BeginSendRequest(DirectoryRequest request, TimeSpan requestTimeout, PartialResultProcessing partialMode, AsyncCallback callback, object state)
     {
         ArgumentNullException.ThrowIfNull(request);
-        Activity? activity = StartActivity(nameof(SendRequest));
+        Activity? activity = StartActivity(request);
         long start = Stopwatch.GetTimestamp();
         s_requestCounter.Add(1);
         activity?.SetTag(OtelTags.RequestType, request.GetType().Name);
@@ -240,6 +245,8 @@ public class TraceableLdapConnection : ILdapConnection
         {
             DirectoryResponse response = _inner.EndSendRequest(asyncResult);
             activity?.SetTag(OtelTags.ResponseType, response.GetType().Name);
+            activity?.SetTag(OtelTags.ResultCode, response.ResultCode.ToString());
+            activity?.SetTag(OtelTags.ErrorMessage, response.ErrorMessage);
             activity?.SetStatus(ActivityStatusCode.Ok);
             if (response is SearchResponse searchResponse)
             {
@@ -339,12 +346,30 @@ public class TraceableLdapConnection : ILdapConnection
         }
     }
 
-    private Activity? StartActivity(string name, ActivityKind kind = ActivityKind.Client)
+    private Activity? StartActivity(DirectoryRequest request, ActivityKind kind = ActivityKind.Client)
     {
-        Activity? activity = _activitySource.StartActivity(name, kind);
+        string activityName = GetActivityName(request);
+        Activity? activity = _activitySource.StartActivity(activityName, kind);
+        if (activity is not null && request is SearchRequest sr)
+        {
+            activity.SetTag("ldap.search.base", sr.DistinguishedName);
+            activity.SetTag("ldap.search.scope", sr.Scope.ToString());
+            activity.SetTag("ldap.search.filter", sr.Filter);
+            activity.SetTag("ldap.search.attributes", string.Join(',', sr.Attributes));
+            activity.SetTag("ldap.search.size_limit", sr.SizeLimit);
+            activity.SetTag("ldap.search.time_limit", sr.TimeLimit);
+        }
+
+        return activity;
+    }
+
+    private Activity? StartActivity(string operation, ActivityKind kind = ActivityKind.Client)
+    {
+        Activity? activity = _activitySource.StartActivity($"ldap {operation}", kind);
         if (activity is not null)
         {
             SetNetworkTags(activity);
+            activity.SetTag(OtelTags.Operation, operation);
         }
 
         return activity;
@@ -365,10 +390,50 @@ public class TraceableLdapConnection : ILdapConnection
         }
     }
 
+    private static string GetActivityName(DirectoryRequest request)
+    {
+#pragma warning disable CA1308 // Normalize strings to uppercase - OTEL semantic conventions
+        string operation = request.GetType().Name.Replace("Request", string.Empty, StringComparison.Ordinal).ToLowerInvariant();
+#pragma warning restore CA1308 // Normalize strings to uppercase - OTEL semantic conventions
+        string target = string.Empty;
+
+        if (request is SearchRequest sr)
+        {
+            target = $"{sr.DistinguishedName} ({sr.Filter})";
+        }
+        else if (request is AddRequest ar)
+        {
+            target = ar.DistinguishedName;
+        }
+        else if (request is DeleteRequest dr)
+        {
+            target = dr.DistinguishedName;
+        }
+        else if (request is ModifyRequest mr)
+        {
+            target = mr.DistinguishedName;
+        }
+        else if (request is CompareRequest cr)
+        {
+            target = cr.DistinguishedName;
+        }
+        else if (request is ExtendedRequest er)
+        {
+            target = er.RequestName;
+        }
+
+        return $"{operation} {target}".TrimEnd();
+    }
+
     private static double GetElapsedMilliseconds(long startTimestamp)
     {
         if (startTimestamp == 0) return 0;
         return Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
+    }
+
+    private static class OtelOperations
+    {
+        public const string Bind = "bind";
     }
 
     private static class OtelTags
@@ -377,7 +442,10 @@ public class TraceableLdapConnection : ILdapConnection
         public const string ExceptionMessage = "exception.message";
         public const string ExceptionStacktrace = "exception.stacktrace";
         public const string RequestType = "requestType";
-        public const string ResponseType = "responseType";
+        public const string Operation = "ldap.operation";
+        public const string ResponseType = "ldap.response.type";
+        public const string ResultCode = "ldap.response.result_code";
+        public const string ErrorMessage = "ldap.response.error_message";
         public const string Username = "username";
         public const string Timeout = "timeout";
         public const string Aborted = "aborted";
