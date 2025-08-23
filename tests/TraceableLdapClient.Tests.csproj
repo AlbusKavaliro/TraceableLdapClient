@@ -1,0 +1,15 @@
+<Project Sdk="MSTest.Sdk">
+  <PropertyGroup>
+    <TestingExtensionsProfile>AllMicrosoft</TestingExtensionsProfile>
+    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Testcontainers" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../src/TraceableLdapClient/TraceableLdapClient.csproj" />
+  </ItemGroup>
+</Project>
