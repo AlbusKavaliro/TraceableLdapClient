@@ -7,14 +7,14 @@ internal class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
 
-    private readonly ILdapConnection _ldapConnection;
+    private readonly IServiceProvider _serviceProvider;
 
-    public Worker(ILogger<Worker> logger, ILdapConnection ldapConnection)
+    public Worker(ILogger<Worker> logger, IServiceProvider serviceProvider)
     {
         ArgumentNullException.ThrowIfNull(logger);
-        ArgumentNullException.ThrowIfNull(ldapConnection);
+        ArgumentNullException.ThrowIfNull(serviceProvider);
         _logger = logger;
-        _ldapConnection = ldapConnection;
+        _serviceProvider = serviceProvider;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -25,8 +25,10 @@ internal class Worker : BackgroundService
             {
                 try
                 {
+                    using IServiceScope scope = _serviceProvider.CreateScope();
+                    ILdapConnection ldapConnection = scope.ServiceProvider.GetRequiredService<ILdapConnection>();
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                    DirectoryResponse r = _ldapConnection.SendRequest(new SearchRequest(
+                    DirectoryResponse r = ldapConnection.SendRequest(new SearchRequest(
                         "dc=example,dc=com",
                         "(objectClass=*)",
                         SearchScope.Subtree,
