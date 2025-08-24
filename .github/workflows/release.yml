@@ -26,6 +26,11 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
+      - name: Fix libldap for tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install --upgrade -y libldap2
+          sudo ln -s /usr/lib/x86_64-linux-gnu/libldap.so.2 /usr/lib/libldap-2.5.so.0
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
