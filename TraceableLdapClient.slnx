@@ -8,6 +8,6 @@
     <Project Path="src/TraceableLdapClient/TraceableLdapClient.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/TraceableLdapClient.Tests.csproj" />
+    <Project Path="tests/TraceableLdapClient.Tests/TraceableLdapClient.Tests.csproj" />
   </Folder>
 </Solution>

@@ -7,6 +7,6 @@
     <PackageReference Include="Testcontainers" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../src/TraceableLdapClient/TraceableLdapClient.csproj" />
+    <ProjectReference Include="../../src/TraceableLdapClient/TraceableLdapClient.csproj" />
   </ItemGroup>
 </Project>
