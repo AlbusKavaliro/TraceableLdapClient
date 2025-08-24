@@ -1,106 +1,109 @@
 using System.DirectoryServices.Protocols;
 using System.Net;
-using Xunit;
+using Ass = TUnit.Assertions.Assert;
 
 namespace TraceableLdapClient.Tests;
 
-public class TraceableLdapConnectionIntegrationTests : TraceableLdapConnectionTestBase
+public class TraceableLdapConnectionIntegrationTests
 {
-    [Fact]
-    public void BindShouldAuthenticateSuccessfully()
+    [ClassDataSource<LdapContainer>(Shared = SharedType.PerTestSession)]
+    public required LdapContainer Ldap { get; init; }
+
+    [Test]
+    public async Task BindShouldAuthenticateSuccessfully()
     {
-        using TraceableLdapConnection conn = CreateConnection();
+        using TraceableLdapConnection conn = Ldap.CreateConnection();
         conn.Bind();
     }
 
-    [Fact]
-    public void BindWithCredentialShouldAuthenticateSuccessfully()
+    [Test]
+    public async Task BindWithCredentialShouldAuthenticateSuccessfully()
     {
-        using TraceableLdapConnection conn = CreateConnection();
-        var credential = new NetworkCredential(AdminUser, LdapUserPass);
+        using TraceableLdapConnection conn = Ldap.CreateConnection();
+        var credential = new NetworkCredential(Ldap.AdminUser, Ldap.UserPass);
         conn.Bind(credential);
     }
 
-    [Fact]
-    public void SendRequestSearchRequestReturnsEntries()
+    [Test]
+    public async Task SendRequestSearchRequestReturnsEntries()
     {
-        using TraceableLdapConnection conn = CreateConnection();
+        using TraceableLdapConnection conn = Ldap.CreateConnection();
         conn.Bind();
         var searchRequest = new SearchRequest(
-            LdapBaseDn,
+            Ldap.BaseDn,
             "(objectClass=*)",
             SearchScope.Subtree,
             null);
         DirectoryResponse response = conn.SendRequest(searchRequest);
-        Xunit.Assert.IsType<SearchResponse>(response);
+        await Ass.That(response).IsTypeOf<SearchResponse>();
     }
 
-    [Fact]
-    public void SendRequestWithTimeoutSearchRequestReturnsEntries()
+    [Test]
+    public async Task SendRequestWithTimeoutSearchRequestReturnsEntries()
     {
-        using TraceableLdapConnection conn = CreateConnection();
+        using TraceableLdapConnection conn = Ldap.CreateConnection();
         conn.Bind();
         var searchRequest = new SearchRequest(
-            LdapBaseDn,
+            Ldap.BaseDn,
             "(objectClass=*)",
             SearchScope.Subtree,
             null);
         DirectoryResponse response = conn.SendRequest(searchRequest, TimeSpan.FromSeconds(5));
-        Xunit.Assert.IsType<SearchResponse>(response);
+        await Ass.That(response).IsTypeOf<SearchResponse>();
     }
 
-    [Fact]
-    public void BeginSendRequestAndEndSendRequestWorks()
+    [Test]
+    public async Task BeginSendRequestAndEndSendRequestWorks()
     {
-        using TraceableLdapConnection conn = CreateConnection();
+        using TraceableLdapConnection conn = Ldap.CreateConnection();
         conn.Bind();
         var searchRequest = new SearchRequest(
-            LdapBaseDn,
+            Ldap.BaseDn,
             "(objectClass=*)",
             SearchScope.Subtree,
             null);
         IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, PartialResultProcessing.NoPartialResultSupport, callback: default!, state: default!);
         DirectoryResponse response = conn.EndSendRequest(asyncResult);
-        Xunit.Assert.IsType<SearchResponse>(response);
+        await Ass.That(response).IsTypeOf<SearchResponse>();
     }
 
-    [Fact]
-    public void BeginSendRequestWithTimeoutAndEndSendRequestWorks()
+    [Test]
+    public async Task BeginSendRequestWithTimeoutAndEndSendRequestWorks()
     {
-        using TraceableLdapConnection conn = CreateConnection();
+        using TraceableLdapConnection conn = Ldap.CreateConnection();
         conn.Bind();
         var searchRequest = new SearchRequest(
-            LdapBaseDn,
+            Ldap.BaseDn,
             "(objectClass=*)",
             SearchScope.Subtree,
             null);
         IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, TimeSpan.FromSeconds(5), PartialResultProcessing.NoPartialResultSupport, callback: default!, state: default!);
         DirectoryResponse response = conn.EndSendRequest(asyncResult);
-        Xunit.Assert.IsType<SearchResponse>(response);
+        await Ass.That(response).IsTypeOf<SearchResponse>();
     }
 
-    [Fact]
-    public void GetPartialResultsReturnsNullOrCollection()
+    [Test]
+    public async Task GetPartialResultsReturnsNullOrCollection()
     {
-        using TraceableLdapConnection conn = CreateConnection();
+        using TraceableLdapConnection conn = Ldap.CreateConnection();
         conn.Bind();
         var searchRequest = new SearchRequest(
-            LdapBaseDn,
+            Ldap.BaseDn,
             "(objectClass=*)",
             SearchScope.Subtree,
             null);
         IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, PartialResultProcessing.ReturnPartialResults, callback: default!, state: default!);
         PartialResultsCollection? partialResults = conn.GetPartialResults(asyncResult);
-        Xunit.Assert.True(partialResults == null || partialResults.Count >= 0);
+        await Ass.That(partialResults).IsNull();
     }
 
-    [Fact]
-    public void AbortShouldNotThrow()
+    [Test]
+    public async Task AbortShouldNotThrow()
     {
-        using TraceableLdapConnection conn = CreateConnection();
+        using TraceableLdapConnection conn = Ldap.CreateConnection();
         conn.Bind();
         var searchRequest = new SearchRequest(
-            LdapBaseDn,
+            Ldap.BaseDn,
             "(objectClass=*)",
             SearchScope.Subtree,
             null);
@@ -108,10 +111,10 @@ public class TraceableLdapConnectionIntegrationTests : TraceableLdapConnectionTe
         conn.Abort(asyncResult);
     }
 
-    [Fact]
-    public void DisposeShouldNotThrow()
+    [Test]
+    public async Task DisposeShouldNotThrow()
     {
-        TraceableLdapConnection conn = CreateConnection();
+        TraceableLdapConnection conn = Ldap.CreateConnection();
         conn.Dispose();
     }
 }

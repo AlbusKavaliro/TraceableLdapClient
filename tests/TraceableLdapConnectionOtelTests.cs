@@ -1,12 +1,15 @@
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.DirectoryServices.Protocols;
-using Xunit;
+using Ass = TUnit.Assertions.Assert;
 
 namespace TraceableLdapClient.Tests;
 
-public class TraceableLdapConnectionOtelTests : TraceableLdapConnectionTestBase
+public class TraceableLdapConnectionOtelTests
 {
+    [ClassDataSource<LdapContainer>(Shared = SharedType.PerTestSession)]
+    public required LdapContainer Ldap { get; init; }
+
     private (List<Activity>, ActivityListener, TraceableLdapConnection) CreateActivityListenerSetUp()
     {
         List<Activity> activities = [];
@@ -19,75 +22,73 @@ public class TraceableLdapConnectionOtelTests : TraceableLdapConnectionTestBase
         };
         ActivitySource.AddActivityListener(activityListener);
 
-        TraceableLdapConnection conn = CreateConnection();
+        TraceableLdapConnection conn = Ldap.CreateConnection();
+
         conn.Bind();
 
         return (activities, activityListener, conn);
     }
 
-    [Fact]
-    public void AddRequestActivityIsGenerated()
+    [Test]
+    public async Task AddRequestActivityIsGenerated()
     {
         (List<Activity> activities, ActivityListener activityListener, TraceableLdapConnection conn) = CreateActivityListenerSetUp();
 
-        AddRequest addRequest = new("cn=testadd,ou=people," + LdapBaseDn,
+        AddRequest addRequest = new("cn=testadd,ou=people," + Ldap.BaseDn,
             new DirectoryAttribute("objectClass", "person"),
             new DirectoryAttribute("cn", "testadd"),
             new DirectoryAttribute("sn", "add"));
         try { conn.SendRequest(addRequest); } catch (DirectoryOperationException) { /* ignore errors for test */ }
 
         activityListener.Dispose();
-
-        Xunit.Assert.Contains(activities, a => a.DisplayName.Contains("add", StringComparison.InvariantCultureIgnoreCase));
+        await Ass.That(activities).Contains(a => a.DisplayName.Contains("add", StringComparison.InvariantCultureIgnoreCase));
     }
 
-    [Fact]
-    public void DeleteRequestActivityIsGenerated()
+    [Test]
+    public async Task DeleteRequestActivityIsGenerated()
     {
         (List<Activity> activities, ActivityListener activityListener, TraceableLdapConnection conn) = CreateActivityListenerSetUp();
         using (conn)
         {
-            DeleteRequest deleteRequest = new("cn=testdelete,ou=people," + LdapBaseDn);
+            DeleteRequest deleteRequest = new("cn=testdelete,ou=people," + Ldap.BaseDn);
             try { conn.SendRequest(deleteRequest); } catch (DirectoryOperationException) { /* ignore errors for test */ }
 
             activityListener.Dispose();
-
-            Xunit.Assert.Contains(activities, a => a.DisplayName.Contains("delete", StringComparison.InvariantCultureIgnoreCase));
+            await Ass.That(activities).Contains(a => a.DisplayName.Contains("delete", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 
-    [Fact]
-    public void ModifyRequestActivityIsGenerated()
+    [Test]
+    public async Task ModifyRequestActivityIsGenerated()
     {
         (List<Activity> activities, ActivityListener activityListener, TraceableLdapConnection conn) = CreateActivityListenerSetUp();
         using (conn)
         {
-            ModifyRequest modifyRequest = new("cn=testmodify,ou=people," + LdapBaseDn, DirectoryAttributeOperation.Replace, "sn", "modded");
+            ModifyRequest modifyRequest = new("cn=testmodify,ou=people," + Ldap.BaseDn, DirectoryAttributeOperation.Replace, "sn", "modded");
             try { conn.SendRequest(modifyRequest); } catch (DirectoryOperationException) { /* ignore errors for test */ }
 
             activityListener.Dispose();
 
-            Xunit.Assert.Contains(activities, a => a.DisplayName.Contains("modify", StringComparison.InvariantCultureIgnoreCase));
+            await Ass.That(activities).Contains(a => a.DisplayName.Contains("modify", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 
-    [Fact]
-    public void CompareRequestActivityIsGenerated()
+    [Test]
+    public async Task CompareRequestActivityIsGenerated()
     {
         (List<Activity> activities, ActivityListener activityListener, TraceableLdapConnection conn) = CreateActivityListenerSetUp();
         using (conn)
         {
-            CompareRequest compareRequest = new("cn=testcompare,ou=people," + LdapBaseDn, "sn", "compare");
+            CompareRequest compareRequest = new("cn=testcompare,ou=people," + Ldap.BaseDn, "sn", "compare");
             try { conn.SendRequest(compareRequest); } catch (DirectoryOperationException) { /* ignore errors for test */ }
 
             activityListener.Dispose();
-
-            Xunit.Assert.Contains(activities, a => a.DisplayName.Contains("compare", StringComparison.InvariantCultureIgnoreCase));
+            await Ass.That(activities).Contains(a => a.DisplayName.Contains("compare", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 
-    [Fact]
-    public void ExtendedRequestActivityIsGenerated()
+    [Test]
+    public async Task ExtendedRequestActivityIsGenerated()
     {
         (List<Activity> activities, ActivityListener activityListener, TraceableLdapConnection conn) = CreateActivityListenerSetUp();
         using (conn)
@@ -97,93 +98,93 @@ public class TraceableLdapConnectionOtelTests : TraceableLdapConnectionTestBase
 
             activityListener.Dispose();
 
-            Xunit.Assert.Contains(activities, a => a.DisplayName.Contains("extended", StringComparison.InvariantCultureIgnoreCase) || a.DisplayName.Contains("1.3.6.1.4.1.1466.20037", StringComparison.InvariantCultureIgnoreCase));
+            await Ass.That(activities).Contains(a => a.DisplayName.Contains("extended", StringComparison.InvariantCultureIgnoreCase) || a.DisplayName.Contains("1.3.6.1.4.1.1466.20037", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 
-    [Fact]
-    public void FailingLdapQuerySetsNonOkActivityStatus()
+    [Test]
+    public async Task FailingLdapQuerySetsNonOkActivityStatus()
     {
         (List<Activity> activities, ActivityListener activityListener, TraceableLdapConnection conn) = CreateActivityListenerSetUp();
         using (conn)
         {
-            SearchRequest invalidRequest = new(LdapBaseDn, ")objectClass=*()", SearchScope.Subtree, null);
-            Xunit.Assert.Throws<LdapException>(() => conn.SendRequest(invalidRequest));
+            SearchRequest invalidRequest = new(Ldap.BaseDn, ")objectClass=*()", SearchScope.Subtree, null);
+            Ass.Throws<LdapException>(() => conn.SendRequest(invalidRequest));
 
             activityListener.Dispose();
 
-            Xunit.Assert.Contains(activities, a => a.Status == ActivityStatusCode.Error);
+            await Ass.That(activities).Contains(a => a.Status == ActivityStatusCode.Error);
         }
     }
 
-    [Fact]
-    public void AbortSetsActivityStatusOk()
+    [Test]
+    public async Task AbortSetsActivityStatusOk()
     {
         (List<Activity> activities, ActivityListener activityListener, TraceableLdapConnection conn) = CreateActivityListenerSetUp();
         using (conn)
         {
-            SearchRequest searchRequest = new(LdapBaseDn, "(objectClass=*)", SearchScope.Subtree, null);
+            SearchRequest searchRequest = new(Ldap.BaseDn, "(objectClass=*)", SearchScope.Subtree, null);
             IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, PartialResultProcessing.NoPartialResultSupport, callback: default!, state: default!);
             conn.Abort(asyncResult);
 
             activityListener.Dispose();
 
-            Xunit.Assert.Contains(activities, a => a.DisplayName.Contains("abort", StringComparison.InvariantCultureIgnoreCase) || a.Status == ActivityStatusCode.Ok);
+            await Ass.That(activities).Contains(a => a.DisplayName.Contains("abort", StringComparison.InvariantCultureIgnoreCase) || a.Status == ActivityStatusCode.Ok);
         }
     }
 
-    [Fact]
-    public void PartialResultsActivityIsGenerated()
+    [Test]
+    public async Task PartialResultsActivityIsGenerated()
     {
         (List<Activity> activities, ActivityListener activityListener, TraceableLdapConnection conn) = CreateActivityListenerSetUp();
         using (conn)
         {
-            SearchRequest searchRequest = new(LdapBaseDn, "(objectClass=*)", SearchScope.Subtree, null);
+            SearchRequest searchRequest = new(Ldap.BaseDn, "(objectClass=*)", SearchScope.Subtree, null);
             IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, PartialResultProcessing.ReturnPartialResults, callback: default!, state: default!);
             _ = conn.GetPartialResults(asyncResult);
 
             activityListener.Dispose();
 
-            Xunit.Assert.Contains(activities, a => a.DisplayName.Contains("GetPartialResults", StringComparison.InvariantCultureIgnoreCase));
+            await Ass.That(activities).Contains(a => a.DisplayName.Contains("GetPartialResults", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 
-    [Fact]
-    public void BeginSendEndSendActivityIsGenerated()
+    [Test]
+    public async Task BeginSendEndSendActivityIsGenerated()
     {
         (List<Activity> activities, ActivityListener activityListener, TraceableLdapConnection conn) = CreateActivityListenerSetUp();
         using (conn)
         {
-            SearchRequest searchRequest = new(LdapBaseDn, "(objectClass=*)", SearchScope.Subtree, null);
+            SearchRequest searchRequest = new(Ldap.BaseDn, "(objectClass=*)", SearchScope.Subtree, null);
             IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, PartialResultProcessing.NoPartialResultSupport, callback: default!, state: default!);
             _ = conn.EndSendRequest(asyncResult);
 
             activityListener.Dispose();
 
-            Xunit.Assert.Contains(activities, a => a.DisplayName.Contains("search", StringComparison.InvariantCultureIgnoreCase));
-            Xunit.Assert.All(activities, a => Xunit.Assert.Equal(ActivityStatusCode.Ok, a.Status));
+            await Ass.That(activities).Contains(a => a.DisplayName.Contains("search", StringComparison.InvariantCultureIgnoreCase));
+            await Ass.That(activities).ContainsOnly(a => a.Status == ActivityStatusCode.Ok);
         }
     }
 
-    [Fact]
-    public void ActivitiesAreGeneratedCorrectly()
+    [Test]
+    public async Task ActivitiesAreGeneratedCorrectly()
     {
         (List<Activity> activities, ActivityListener activityListener, TraceableLdapConnection conn) = CreateActivityListenerSetUp();
         using (conn)
         {
-            SearchRequest searchRequest = new(LdapBaseDn, "(objectClass=*)", SearchScope.Subtree, null);
+            SearchRequest searchRequest = new(Ldap.BaseDn, "(objectClass=*)", SearchScope.Subtree, null);
             _ = conn.SendRequest(searchRequest);
 
             activityListener.Dispose();
 
-            Xunit.Assert.Contains(activities, a => a.DisplayName.Contains("ldap bind", StringComparison.InvariantCultureIgnoreCase));
-            Xunit.Assert.Contains(activities, a => a.DisplayName.Contains("search", StringComparison.InvariantCultureIgnoreCase));
-            Xunit.Assert.All(activities, a => Xunit.Assert.Equal(ActivityStatusCode.Ok, a.Status));
+            await Ass.That(activities).Contains(a => a.DisplayName.Contains("ldap bind", StringComparison.InvariantCultureIgnoreCase));
+            await Ass.That(activities).Contains(a => a.DisplayName.Contains("search", StringComparison.InvariantCultureIgnoreCase));
+            await Ass.That(activities).ContainsOnly(a => a.Status == ActivityStatusCode.Ok);
         }
     }
 
-    [Fact]
-    public void MetricsAreCountedCorrectly()
+    [Test]
+    public async Task MetricsAreCountedCorrectly()
     {
         List<MetricRecord> metrics = [];
         MeterListener meterListener = new()
@@ -206,9 +207,9 @@ public class TraceableLdapConnectionOtelTests : TraceableLdapConnectionTestBase
         });
         meterListener.Start();
 
-        using TraceableLdapConnection conn = CreateConnection();
+        using TraceableLdapConnection conn = Ldap.CreateConnection();
         conn.Bind();
-        SearchRequest searchRequest = new(LdapBaseDn, "(objectClass=*)", SearchScope.Subtree, null);
+        SearchRequest searchRequest = new(Ldap.BaseDn, "(objectClass=*)", SearchScope.Subtree, null);
         _ = conn.SendRequest(searchRequest);
 
         meterListener.Dispose();
@@ -217,9 +218,9 @@ public class TraceableLdapConnectionOtelTests : TraceableLdapConnectionTestBase
         double durationTotal = metrics.Where(m => m.Name == "network.client.duration").Sum(m => Convert.ToDouble(m.Value, System.Globalization.CultureInfo.InvariantCulture));
         long entriesTotal = metrics.Where(m => m.Name == "ldap.search.entries_returned").Sum(m => Convert.ToInt64(m.Value, System.Globalization.CultureInfo.InvariantCulture));
 
-        Xunit.Assert.True(requestsTotal >= 2, $"Expected at least 2 requests, got {requestsTotal}");
-        Xunit.Assert.True(durationTotal > 0, $"Expected duration > 0, got {durationTotal}");
-        Xunit.Assert.True(entriesTotal >= 0, $"Expected entries >= 0, got {entriesTotal}");
+        await Ass.That(requestsTotal).IsGreaterThanOrEqualTo(2);
+        await Ass.That(durationTotal).IsGreaterThanOrEqualTo(2);
+        await Ass.That(entriesTotal).IsGreaterThanOrEqualTo(0);
     }
 
     private record struct MetricRecord(string Name, object Value, IReadOnlyList<KeyValuePair<string, object?>> Tags);
