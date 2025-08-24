@@ -83,7 +83,7 @@ public class TraceableLdapConnectionIntegrationTests
     }
 
     [Test]
-    public async Task GetPartialResultsReturnsNullOrCollection()
+    public async Task GetPartialResultsReturnsKnownAdmin()
     {
         using TraceableLdapConnection conn = Ldap.CreateConnection();
         conn.Bind();
@@ -94,7 +94,7 @@ public class TraceableLdapConnectionIntegrationTests
             null);
         IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, PartialResultProcessing.ReturnPartialResults, callback: default!, state: default!);
         PartialResultsCollection? partialResults = conn.GetPartialResults(asyncResult);
-        await Assert.That(partialResults).IsNull().Or.HasMember(p => p!.Count).EqualTo(0);
+        await Assert.That(partialResults).HasMember(p => p!.Count).EqualTo(1);
     }
 
     [Test]
