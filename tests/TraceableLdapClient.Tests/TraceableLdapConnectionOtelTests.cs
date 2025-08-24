@@ -1,10 +1,10 @@
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.DirectoryServices.Protocols;
-using Ass = TUnit.Assertions.Assert;
 
 namespace TraceableLdapClient.Tests;
 
+[NotInParallel]
 public class TraceableLdapConnectionOtelTests
 {
     [ClassDataSource<LdapContainer>(Shared = SharedType.PerTestSession)]
@@ -41,7 +41,7 @@ public class TraceableLdapConnectionOtelTests
         try { conn.SendRequest(addRequest); } catch (DirectoryOperationException) { /* ignore errors for test */ }
 
         activityListener.Dispose();
-        await Ass.That(activities).Contains(a => a.DisplayName.Contains("add", StringComparison.InvariantCultureIgnoreCase));
+        await Assert.That(activities).Contains(a => a.DisplayName.Contains("add", StringComparison.InvariantCultureIgnoreCase));
     }
 
     [Test]
@@ -54,7 +54,7 @@ public class TraceableLdapConnectionOtelTests
             try { conn.SendRequest(deleteRequest); } catch (DirectoryOperationException) { /* ignore errors for test */ }
 
             activityListener.Dispose();
-            await Ass.That(activities).Contains(a => a.DisplayName.Contains("delete", StringComparison.InvariantCultureIgnoreCase));
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("delete", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 
@@ -69,7 +69,7 @@ public class TraceableLdapConnectionOtelTests
 
             activityListener.Dispose();
 
-            await Ass.That(activities).Contains(a => a.DisplayName.Contains("modify", StringComparison.InvariantCultureIgnoreCase));
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("modify", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 
@@ -83,7 +83,7 @@ public class TraceableLdapConnectionOtelTests
             try { conn.SendRequest(compareRequest); } catch (DirectoryOperationException) { /* ignore errors for test */ }
 
             activityListener.Dispose();
-            await Ass.That(activities).Contains(a => a.DisplayName.Contains("compare", StringComparison.InvariantCultureIgnoreCase));
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("compare", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 
@@ -98,7 +98,7 @@ public class TraceableLdapConnectionOtelTests
 
             activityListener.Dispose();
 
-            await Ass.That(activities).Contains(a => a.DisplayName.Contains("extended", StringComparison.InvariantCultureIgnoreCase) || a.DisplayName.Contains("1.3.6.1.4.1.1466.20037", StringComparison.InvariantCultureIgnoreCase));
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("extended", StringComparison.InvariantCultureIgnoreCase) || a.DisplayName.Contains("1.3.6.1.4.1.1466.20037", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 
@@ -109,11 +109,11 @@ public class TraceableLdapConnectionOtelTests
         using (conn)
         {
             SearchRequest invalidRequest = new(Ldap.BaseDn, ")objectClass=*()", SearchScope.Subtree, null);
-            Ass.Throws<LdapException>(() => conn.SendRequest(invalidRequest));
+            Assert.Throws<LdapException>(() => conn.SendRequest(invalidRequest));
 
             activityListener.Dispose();
 
-            await Ass.That(activities).Contains(a => a.Status == ActivityStatusCode.Error);
+            await Assert.That(activities).Contains(a => a.Status == ActivityStatusCode.Error);
         }
     }
 
@@ -129,7 +129,7 @@ public class TraceableLdapConnectionOtelTests
 
             activityListener.Dispose();
 
-            await Ass.That(activities).Contains(a => a.DisplayName.Contains("abort", StringComparison.InvariantCultureIgnoreCase) || a.Status == ActivityStatusCode.Ok);
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("abort", StringComparison.InvariantCultureIgnoreCase) || a.Status == ActivityStatusCode.Ok);
         }
     }
 
@@ -145,7 +145,7 @@ public class TraceableLdapConnectionOtelTests
 
             activityListener.Dispose();
 
-            await Ass.That(activities).Contains(a => a.DisplayName.Contains("GetPartialResults", StringComparison.InvariantCultureIgnoreCase));
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("GetPartialResults", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 
@@ -161,8 +161,8 @@ public class TraceableLdapConnectionOtelTests
 
             activityListener.Dispose();
 
-            await Ass.That(activities).Contains(a => a.DisplayName.Contains("search", StringComparison.InvariantCultureIgnoreCase));
-            await Ass.That(activities).ContainsOnly(a => a.Status == ActivityStatusCode.Ok);
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("search", StringComparison.InvariantCultureIgnoreCase));
+            await Assert.That(activities).ContainsOnly(a => a.Status == ActivityStatusCode.Ok);
         }
     }
 
@@ -177,9 +177,9 @@ public class TraceableLdapConnectionOtelTests
 
             activityListener.Dispose();
 
-            await Ass.That(activities).Contains(a => a.DisplayName.Contains("ldap bind", StringComparison.InvariantCultureIgnoreCase));
-            await Ass.That(activities).Contains(a => a.DisplayName.Contains("search", StringComparison.InvariantCultureIgnoreCase));
-            await Ass.That(activities).ContainsOnly(a => a.Status == ActivityStatusCode.Ok);
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("ldap bind", StringComparison.InvariantCultureIgnoreCase));
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("search", StringComparison.InvariantCultureIgnoreCase));
+            await Assert.That(activities).ContainsOnly(a => a.Status == ActivityStatusCode.Ok);
         }
     }
 
@@ -218,9 +218,9 @@ public class TraceableLdapConnectionOtelTests
         double durationTotal = metrics.Where(m => m.Name == "network.client.duration").Sum(m => Convert.ToDouble(m.Value, System.Globalization.CultureInfo.InvariantCulture));
         long entriesTotal = metrics.Where(m => m.Name == "ldap.search.entries_returned").Sum(m => Convert.ToInt64(m.Value, System.Globalization.CultureInfo.InvariantCulture));
 
-        await Ass.That(requestsTotal).IsGreaterThanOrEqualTo(2);
-        await Ass.That(durationTotal).IsGreaterThanOrEqualTo(2);
-        await Ass.That(entriesTotal).IsGreaterThanOrEqualTo(0);
+        await Assert.That(requestsTotal).IsGreaterThanOrEqualTo(2);
+        await Assert.That(durationTotal).IsGreaterThanOrEqualTo(2);
+        await Assert.That(entriesTotal).IsGreaterThanOrEqualTo(0);
     }
 
     private record struct MetricRecord(string Name, object Value, IReadOnlyList<KeyValuePair<string, object?>> Tags);

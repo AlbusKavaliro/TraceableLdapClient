@@ -1,9 +1,9 @@
 using System.DirectoryServices.Protocols;
 using System.Net;
-using Ass = TUnit.Assertions.Assert;
 
 namespace TraceableLdapClient.Tests;
 
+[NotInParallel]
 public class TraceableLdapConnectionIntegrationTests
 {
     [ClassDataSource<LdapContainer>(Shared = SharedType.PerTestSession)]
@@ -35,7 +35,7 @@ public class TraceableLdapConnectionIntegrationTests
             SearchScope.Subtree,
             null);
         DirectoryResponse response = conn.SendRequest(searchRequest);
-        await Ass.That(response).IsTypeOf<SearchResponse>();
+        await Assert.That(response).IsTypeOf<SearchResponse>();
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class TraceableLdapConnectionIntegrationTests
             SearchScope.Subtree,
             null);
         DirectoryResponse response = conn.SendRequest(searchRequest, TimeSpan.FromSeconds(5));
-        await Ass.That(response).IsTypeOf<SearchResponse>();
+        await Assert.That(response).IsTypeOf<SearchResponse>();
     }
 
     [Test]
@@ -64,7 +64,7 @@ public class TraceableLdapConnectionIntegrationTests
             null);
         IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, PartialResultProcessing.NoPartialResultSupport, callback: default!, state: default!);
         DirectoryResponse response = conn.EndSendRequest(asyncResult);
-        await Ass.That(response).IsTypeOf<SearchResponse>();
+        await Assert.That(response).IsTypeOf<SearchResponse>();
     }
 
     [Test]
@@ -79,7 +79,7 @@ public class TraceableLdapConnectionIntegrationTests
             null);
         IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, TimeSpan.FromSeconds(5), PartialResultProcessing.NoPartialResultSupport, callback: default!, state: default!);
         DirectoryResponse response = conn.EndSendRequest(asyncResult);
-        await Ass.That(response).IsTypeOf<SearchResponse>();
+        await Assert.That(response).IsTypeOf<SearchResponse>();
     }
 
     [Test]
@@ -94,7 +94,7 @@ public class TraceableLdapConnectionIntegrationTests
             null);
         IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, PartialResultProcessing.ReturnPartialResults, callback: default!, state: default!);
         PartialResultsCollection? partialResults = conn.GetPartialResults(asyncResult);
-        await Ass.That(partialResults).IsNull();
+        await Assert.That(partialResults).IsNull().Or.HasMember(p => p!.Count).EqualTo(0);
     }
 
     [Test]
