@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <PackageId>AlbusKavaliro.TraceableLdapClient</PackageId>
-  </PropertyGroup>
-
   <ItemGroup Label="Microsoft">
     <PackageReference Include="System.DirectoryServices.Protocols" />
   </ItemGroup>

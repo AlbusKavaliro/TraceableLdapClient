@@ -2,7 +2,7 @@ using System.DirectoryServices.Protocols;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 
-namespace TraceableLdapClient;
+namespace AlbusKavaliro.TraceableLdapClient;
 
 /// <inheritdoc cref="LdapConnection"/>
 public interface ILdapConnection : IDisposable

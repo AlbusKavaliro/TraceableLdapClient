@@ -10,6 +10,6 @@
     <PackageReference Include="Testcontainers" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../../src/TraceableLdapClient/TraceableLdapClient.csproj" />
+    <ProjectReference Include="../../src/AlbusKavaliro.TraceableLdapClient/AlbusKavaliro.TraceableLdapClient.csproj" />
   </ItemGroup>
 </Project>

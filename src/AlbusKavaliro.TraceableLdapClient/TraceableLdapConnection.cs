@@ -4,7 +4,7 @@ using System.DirectoryServices.Protocols;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 
-namespace TraceableLdapClient;
+namespace AlbusKavaliro.TraceableLdapClient;
 
 public class TraceableLdapConnection : ILdapConnection
 {

@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../src/TraceableLdapClient/TraceableLdapClient.csproj" />
+    <ProjectReference Include="../../src/AlbusKavaliro.TraceableLdapClient/AlbusKavaliro.TraceableLdapClient.csproj" />
     <ProjectReference Include="../ServiceDefaults/ServiceDefaults.csproj" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 using System.DirectoryServices.Protocols;
-using TraceableLdapClient;
+using AlbusKavaliro.TraceableLdapClient;
 
 namespace WorkerService;
 

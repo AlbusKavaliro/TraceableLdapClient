@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.DirectoryServices.Protocols;
 
-namespace TraceableLdapClient.Tests;
+namespace AlbusKavaliro.TraceableLdapClient.Tests;
 
 [NotInParallel]
 public class TraceableLdapConnectionOtelTests

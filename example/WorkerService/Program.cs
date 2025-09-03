@@ -1,6 +1,6 @@
 using System.DirectoryServices.Protocols;
 using System.Net;
-using TraceableLdapClient;
+using AlbusKavaliro.TraceableLdapClient;
 using WorkerService;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);

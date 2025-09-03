@@ -4,7 +4,7 @@ using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using TUnit.Core.Interfaces;
 
-namespace TraceableLdapClient.Tests;
+namespace AlbusKavaliro.TraceableLdapClient.Tests;
 
 public class LdapContainer : IAsyncInitializer, IAsyncDisposable
 {

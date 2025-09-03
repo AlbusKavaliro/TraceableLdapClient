@@ -1,7 +1,7 @@
 using System.DirectoryServices.Protocols;
 using System.Net;
 
-namespace TraceableLdapClient.Tests;
+namespace AlbusKavaliro.TraceableLdapClient.Tests;
 
 [NotInParallel]
 public class TraceableLdapConnectionIntegrationTests
