@@ -348,8 +348,8 @@ public class TraceableLdapConnection : ILdapConnection
 
     private Activity? StartActivity(DirectoryRequest request, ActivityKind kind = ActivityKind.Client)
     {
-        string activityName = GetActivityName(request);
-        Activity? activity = StartActivity(activityName, kind);
+        (string operation, string target) = GetActivityInfo(request);
+        Activity? activity = StartActivity(operation, target, kind);
         if (activity is not null && request is SearchRequest sr)
         {
             activity.SetTag("ldap.search.base", sr.DistinguishedName);
@@ -363,9 +363,9 @@ public class TraceableLdapConnection : ILdapConnection
         return activity;
     }
 
-    private Activity? StartActivity(string operation, ActivityKind kind = ActivityKind.Client)
+    private Activity? StartActivity(string operation, string? target = null, ActivityKind kind = ActivityKind.Client)
     {
-        Activity? activity = _activitySource.StartActivity($"ldap {operation}", kind);
+        Activity? activity = _activitySource.StartActivity($"ldap {operation} {target}".TrimEnd(), kind);
         if (activity is not null)
         {
             SetNetworkTags(activity);
@@ -379,7 +379,7 @@ public class TraceableLdapConnection : ILdapConnection
     {
         activity.SetTag("network.protocol.name", "ldap");
         activity.SetTag("network.transport", "tcp");
-        if (_inner.Directory is LdapDirectoryIdentifier ldapId)
+        if (Directory is LdapDirectoryIdentifier ldapId)
         {
             if (ldapId.Servers != null && ldapId.Servers.Length > 0)
             {
@@ -390,7 +390,7 @@ public class TraceableLdapConnection : ILdapConnection
         }
     }
 
-    private static string GetActivityName(DirectoryRequest request)
+    private static (string operation, string target) GetActivityInfo(DirectoryRequest request)
     {
 #pragma warning disable CA1308 // Normalize strings to uppercase - OTEL semantic conventions
         string operation = request.GetType().Name.Replace("Request", string.Empty, StringComparison.Ordinal).ToLowerInvariant();
@@ -422,7 +422,7 @@ public class TraceableLdapConnection : ILdapConnection
             target = er.RequestName;
         }
 
-        return $"{operation} {target}".TrimEnd();
+        return (operation, target);
     }
 
     private static double GetElapsedMilliseconds(long startTimestamp)

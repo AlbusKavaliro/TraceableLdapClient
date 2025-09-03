@@ -161,7 +161,7 @@ public class TraceableLdapConnectionOtelTests
 
             activityListener.Dispose();
 
-            await Assert.That(activities).Contains(a => a.DisplayName.Contains("search", StringComparison.InvariantCultureIgnoreCase));
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("ldap search", StringComparison.InvariantCultureIgnoreCase));
             await Assert.That(activities).ContainsOnly(a => a.Status == ActivityStatusCode.Ok);
         }
     }
@@ -178,7 +178,7 @@ public class TraceableLdapConnectionOtelTests
             activityListener.Dispose();
 
             await Assert.That(activities).Contains(a => a.DisplayName.Contains("ldap bind", StringComparison.InvariantCultureIgnoreCase));
-            await Assert.That(activities).Contains(a => a.DisplayName.Contains("search", StringComparison.InvariantCultureIgnoreCase));
+            await Assert.That(activities).Contains(a => a.DisplayName.Contains("ldap search", StringComparison.InvariantCultureIgnoreCase));
             await Assert.That(activities).ContainsOnly(a => a.Status == ActivityStatusCode.Ok);
         }
     }
