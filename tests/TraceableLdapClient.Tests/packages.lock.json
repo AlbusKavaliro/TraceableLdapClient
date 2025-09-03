@@ -217,7 +217,7 @@
           "TUnit.Core": "0.57.1"
         }
       },
-      "traceableldapclient": {
+      "AlbusKavaliro.TraceableLdapClient": {
         "type": "Project",
         "dependencies": {
           "System.DirectoryServices.Protocols": "[9.0.8, )"

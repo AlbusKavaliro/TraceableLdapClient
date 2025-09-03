@@ -464,6 +464,12 @@
         "resolved": "8.0.0",
         "contentHash": "7mu9v0QDv66ar3DpGSZHg9NuNcxDaaAcnMULuZlaTpP9+hwXhrxNGsF5GmLkSHxFdb5bBc1TzeujsRgTrPWi+Q=="
       },
+      "AlbusKavaliro.TraceableLdapClient": {
+        "type": "Project",
+        "dependencies": {
+          "System.DirectoryServices.Protocols": "[9.0.8, )"
+        }
+      },
       "servicedefaults": {
         "type": "Project",
         "dependencies": {
@@ -474,12 +480,6 @@
           "OpenTelemetry.Instrumentation.AspNetCore": "[1.12.0, )",
           "OpenTelemetry.Instrumentation.Http": "[1.12.0, )",
           "OpenTelemetry.Instrumentation.Runtime": "[1.12.0, )"
-        }
-      },
-      "traceableldapclient": {
-        "type": "Project",
-        "dependencies": {
-          "System.DirectoryServices.Protocols": "[9.0.8, )"
         }
       },
       "Microsoft.Extensions.Http.Resilience": {
