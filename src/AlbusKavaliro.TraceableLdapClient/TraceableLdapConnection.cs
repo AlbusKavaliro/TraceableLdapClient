@@ -355,7 +355,7 @@ public class TraceableLdapConnection : ILdapConnection
             activity.SetTag("ldap.search.base", sr.DistinguishedName);
             activity.SetTag("ldap.search.scope", sr.Scope.ToString());
             activity.SetTag("ldap.search.filter", sr.Filter);
-            activity.SetTag("ldap.search.attributes", string.Join(',', sr.Attributes));
+            activity.SetTag("ldap.search.attributes", string.Join(',', sr.Attributes.Cast<string>()));
             activity.SetTag("ldap.search.size_limit", sr.SizeLimit);
             activity.SetTag("ldap.search.time_limit", sr.TimeLimit);
         }
