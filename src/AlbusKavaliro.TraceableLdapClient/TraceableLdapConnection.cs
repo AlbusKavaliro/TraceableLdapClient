@@ -349,7 +349,7 @@ public class TraceableLdapConnection : ILdapConnection
     private Activity? StartActivity(DirectoryRequest request, ActivityKind kind = ActivityKind.Client)
     {
         string activityName = GetActivityName(request);
-        Activity? activity = _activitySource.StartActivity(activityName, kind);
+        Activity? activity = StartActivity(activityName, kind);
         if (activity is not null && request is SearchRequest sr)
         {
             activity.SetTag("ldap.search.base", sr.DistinguishedName);
