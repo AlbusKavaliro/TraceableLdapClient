@@ -47,7 +47,7 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: TempMaiSe/TraceableLdapClient
+          slug: AlbusKavaliro/TraceableLdapClient
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
         uses: codecov/test-results-action@v1
