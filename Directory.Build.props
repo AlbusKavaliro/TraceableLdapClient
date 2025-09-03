@@ -18,8 +18,8 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryBranch>main</RepositoryBranch>
-    <RepositoryCommit>9f79c0769be7429185241e3acfe5962801fc2021</RepositoryCommit>
-    <Version>1.0.0-beta.2</Version>
+    <RepositoryCommit>bf004d8cba74b126b513226029abce519fce59fa</RepositoryCommit>
+    <Version>1.0.0-beta.3</Version>
   </PropertyGroup>
 
 </Project>
