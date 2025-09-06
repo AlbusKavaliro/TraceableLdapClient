@@ -1,6 +1,14 @@
 {
   "version": 2,
   "dependencies": {
+    "net8.0": {
+      "System.DirectoryServices.Protocols": {
+        "type": "Direct",
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "n//z9hQr+zGvv6nDN8B0aKyz90FFsVbbzDNHtx/ieOzkxYdcfEzf2q7EpkHMBNofxvD7QrM8AQrS7+jJQyRIsw=="
+      }
+    },
     "net9.0": {
       "System.DirectoryServices.Protocols": {
         "type": "Direct",
