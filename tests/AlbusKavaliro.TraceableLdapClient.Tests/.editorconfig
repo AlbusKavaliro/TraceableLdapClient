@@ -2,5 +2,7 @@
 
 # C# files
 [*.cs]
-dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA1515.severity = none # public classes may be required for TUnit test discovery
+dotnet_diagnostic.CA1707.severity = none # we don't care about underscores in test names
+dotnet_diagnostic.CS1998.severity = none # TUnit tests are async by design, we don't want sync-over-async warnings
 dotnet_diagnostic.CS8625.severity = none
