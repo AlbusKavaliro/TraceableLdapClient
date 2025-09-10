@@ -24,7 +24,7 @@ public class LdapContainer : IAsyncInitializer, IAsyncDisposable
         _ldapContainer = new ContainerBuilder()
             .WithImage("docker.io/lldap/lldap:stable")
             .WithPortBinding(LdapPort, true)
-            .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(LdapPort))
+            .WithWaitStrategy(Wait.ForUnixContainer().UntilInternalTcpPortIsAvailable(LdapPort))
             .WithEnvironment("LLDAP_JWT_SECRET", JwtSecret)
             .WithEnvironment("LLDAP_KEY_SEED", KeySeed)
             .WithEnvironment("LLDAP_LDAP_BASE_DN", BaseDn)
