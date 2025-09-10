@@ -42,6 +42,7 @@ public class LdapContainer : IAsyncInitializer, IAsyncDisposable
     public async ValueTask DisposeAsync()
     {
         await _ldapContainer.DisposeAsync().ConfigureAwait(true);
+        GC.SuppressFinalize(this);
     }
 
     public TraceableLdapConnection CreateConnection()
