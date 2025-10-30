@@ -94,7 +94,7 @@ public class TraceableLdapConnectionIntegrationTests
             null);
         IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, PartialResultProcessing.ReturnPartialResults, callback: default!, state: default!);
         PartialResultsCollection? partialResults = conn.GetPartialResults(asyncResult);
-        await Assert.That(partialResults).HasMember(p => p!.Count).EqualTo(1);
+        await Assert.That(partialResults).HasProperty(p => p!.Count).IsEqualTo(1);
     }
 
     [Test]
