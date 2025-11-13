@@ -1,7 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup Label="Microsoft">
-    <PackageReference Include="System.DirectoryServices.Protocols" />
-  </ItemGroup>
-
-</Project>

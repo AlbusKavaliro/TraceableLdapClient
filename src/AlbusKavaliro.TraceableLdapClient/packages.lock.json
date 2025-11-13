@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "dependencies": {
+    "net10.0": {
+      "Microsoft.NET.ILLink.Tasks": {
+        "type": "Direct",
+        "requested": "[10.0.0, )",
+        "resolved": "10.0.0",
+        "contentHash": "kICGrGYEzCNI3wPzfEXcwNHgTvlvVn9yJDhSdRK+oZQy4jvYH529u7O0xf5ocQKzOMjfS07+3z9PKRIjrFMJDA=="
+      },
+      "System.DirectoryServices.Protocols": {
+        "type": "Direct",
+        "requested": "[10.0.0, )",
+        "resolved": "10.0.0",
+        "contentHash": "XYQT4aM4S5uo0EM0j5ASsqBVgcz8cTf64rdHAzTo/5zaAnbWn6VeE2gzFxRj089kq82s7Zxd9jCMqfhhcYILew=="
+      }
+    },
+    "net8.0": {
+      "Microsoft.NET.ILLink.Tasks": {
+        "type": "Direct",
+        "requested": "[8.0.22, )",
+        "resolved": "8.0.22",
+        "contentHash": "MhcMithKEiyyNkD2ZfbDZPmcOdi0GheGfg8saEIIEfD/fol3iHmcV8TsZkD4ZYz5gdUuoX4YtlVySUU7Sxl9SQ=="
+      },
+      "System.DirectoryServices.Protocols": {
+        "type": "Direct",
+        "requested": "[10.0.0, )",
+        "resolved": "10.0.0",
+        "contentHash": "XYQT4aM4S5uo0EM0j5ASsqBVgcz8cTf64rdHAzTo/5zaAnbWn6VeE2gzFxRj089kq82s7Zxd9jCMqfhhcYILew=="
+      }
+    },
+    "net9.0": {
+      "Microsoft.NET.ILLink.Tasks": {
+        "type": "Direct",
+        "requested": "[9.0.11, )",
+        "resolved": "9.0.11",
+        "contentHash": "vvB9rtDmWaXgYkViT00KORBVmA3pcYsHlgd9vOPqL9sf5bKy3rvLMF1+sI1uUfVj28S3itirHlHmX5/kcpZKNw=="
+      },
+      "System.DirectoryServices.Protocols": {
+        "type": "Direct",
+        "requested": "[10.0.0, )",
+        "resolved": "10.0.0",
+        "contentHash": "XYQT4aM4S5uo0EM0j5ASsqBVgcz8cTf64rdHAzTo/5zaAnbWn6VeE2gzFxRj089kq82s7Zxd9jCMqfhhcYILew=="
+      }
+    }
+  }
+}
