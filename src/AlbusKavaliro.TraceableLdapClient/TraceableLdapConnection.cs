@@ -556,12 +556,6 @@ public class TraceableLdapConnection : ILdapConnection
 
             activity.SetTag(OtelTags.ConnectionType, isLdaps ? "ldaps" : isEncrypted ? "starttls" : "plain");
             activity.SetTag(OtelTags.ConnectionEncrypted, isEncrypted);
-
-            // Add TLS version if available and encrypted
-            if (isEncrypted && SessionOptions.SslInformation?.Protocol != null)
-            {
-                activity.SetTag(OtelTags.TlsVersion, SessionOptions.SslInformation.Protocol.ToString());
-            }
         }
     }
 
@@ -624,6 +618,19 @@ public class TraceableLdapConnection : ILdapConnection
         if (response.Referral?.Length > 0)
         {
             activity.SetTag(OtelTags.Referrals, string.Join(',', response.Referral.Select(u => u.ToString())));
+        }
+
+        // Add TLS version if available and encrypted (now that connection is established)
+        try
+        {
+            if (SessionOptions.SslInformation?.Protocol != null)
+            {
+                activity.SetTag(OtelTags.TlsVersion, SessionOptions.SslInformation.Protocol.ToString());
+            }
+        }
+        catch (Exception)
+        {
+            // Ignore errors when accessing SSL information
         }
 
         SetResponseSpecificAttributes(activity, response);
