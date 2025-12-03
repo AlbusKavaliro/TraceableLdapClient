@@ -93,8 +93,13 @@ public class TraceableLdapConnectionIntegrationTests
             SearchScope.Subtree,
             null);
         IAsyncResult asyncResult = conn.BeginSendRequest(searchRequest, PartialResultProcessing.ReturnPartialResults, callback: default!, state: default!);
+        while (!asyncResult.IsCompleted)
+        {
+            await Task.Delay(10).ConfigureAwait(true);
+        }
+
         PartialResultsCollection? partialResults = conn.GetPartialResults(asyncResult);
-        await Assert.That(partialResults).HasProperty(p => p!.Count).IsEqualTo(1);
+        await Assert.That(partialResults).HasProperty(p => p!.Count).IsEqualTo(4);
     }
 
     [Test]
