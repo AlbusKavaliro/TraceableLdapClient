@@ -5,13 +5,13 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
   <ItemGroup Label="Aspire">
-    <PackageVersion Include="Aspire.Hosting.AppHost" Version="13.1.0" />
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="13.1.2" />
   </ItemGroup>
   <ItemGroup Label="Microsoft">
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.2.0" />
-    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.2.0" />
-    <PackageVersion Include="System.DirectoryServices.Protocols" Version="10.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.3.0" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.3.0" />
+    <PackageVersion Include="System.DirectoryServices.Protocols" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup Label="OpenTelemetry">
     <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.15.0" />
@@ -21,10 +21,10 @@
     <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.15.0" />
   </ItemGroup>
   <ItemGroup Label="Test">
-    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.3.2" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.CrashDump" Version="2.0.2" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.0.2" />
-    <PackageVersion Include="TUnit" Version="1.12.111" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.5.1" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.CrashDump" Version="2.1.0" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.1.0" />
+    <PackageVersion Include="TUnit" Version="1.17.54" />
     <PackageVersion Include="Testcontainers" Version="4.10.0" />
   </ItemGroup>
 </Project>
