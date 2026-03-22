@@ -41,28 +41,3 @@ updates:
       prefix: fix
       prefix-development: chore
       include: scope
-
-  - package-ecosystem: nuget
-    directory: /example/AppHost
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /example/ServiceDefaults
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /example/WorkerService
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /src/AlbusKavaliro.TraceableLdapClient
-    schedule:
-      interval: daily
-
-  - package-ecosystem: nuget
-    directory: /tests/AlbusKavaliro.TraceableLdapClient.Tests
-    schedule:
-      interval: daily
