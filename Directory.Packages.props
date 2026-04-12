@@ -22,8 +22,8 @@
   </ItemGroup>
   <ItemGroup Label="Test">
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.6.2" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.CrashDump" Version="2.1.0" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.1.0" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.CrashDump" Version="2.2.1" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.2.1" />
     <PackageVersion Include="TUnit" Version="1.32.0" />
     <PackageVersion Include="Testcontainers" Version="4.11.0" />
   </ItemGroup>
