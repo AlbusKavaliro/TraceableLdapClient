@@ -24,7 +24,7 @@
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.5.2" />
     <PackageVersion Include="Microsoft.Testing.Extensions.CrashDump" Version="2.1.0" />
     <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.1.0" />
-    <PackageVersion Include="TUnit" Version="1.24.18" />
+    <PackageVersion Include="TUnit" Version="1.32.0" />
     <PackageVersion Include="Testcontainers" Version="4.11.0" />
   </ItemGroup>
 </Project>
