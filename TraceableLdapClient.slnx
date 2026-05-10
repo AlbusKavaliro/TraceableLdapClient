@@ -1,5 +1,13 @@
 <Solution>
+  <Folder Name="/example/">
+    <Project Path="example/AppHost/AppHost.csproj" />
+    <Project Path="example/ServiceDefaults/ServiceDefaults.csproj" />
+    <Project Path="example/WorkerService/WorkerService.csproj" />
+  </Folder>
   <Folder Name="/src/">
-    <Project Path="src/TraceableLdapClient/TraceableLdapClient.csproj" />
+    <Project Path="src/AlbusKavaliro.TraceableLdapClient/AlbusKavaliro.TraceableLdapClient.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AlbusKavaliro.TraceableLdapClient.Tests/AlbusKavaliro.TraceableLdapClient.Tests.csproj" />
   </Folder>
 </Solution>
