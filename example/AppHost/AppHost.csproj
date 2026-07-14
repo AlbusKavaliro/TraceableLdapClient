@@ -3,6 +3,7 @@
   <Sdk Name="Aspire.AppHost.Sdk" />
 
   <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <UserSecretsId>7245e7e7-859c-4e9f-a8fd-2cd8e0f8209e</UserSecretsId>
   </PropertyGroup>
