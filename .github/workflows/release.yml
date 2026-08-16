@@ -23,7 +23,7 @@ jobs:
       packages: write # to be able to publish to GitHub Packages
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Fix libldap for tests
@@ -32,13 +32,13 @@ jobs:
           sudo apt-get install --upgrade -y libldap2
           sudo ln -s /usr/lib/x86_64-linux-gnu/libldap.so.2 /usr/lib/libldap-2.5.so.0
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
       - name: Restore dependencies
         run: dotnet restore --locked-mode
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "lts/*"
           check-latest: true
