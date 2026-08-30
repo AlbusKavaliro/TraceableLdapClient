@@ -48,15 +48,15 @@
       },
       "TUnit": {
         "type": "Direct",
-        "requested": "[1.65.31, )",
-        "resolved": "1.65.31",
-        "contentHash": "UiaD1GWXCitZU0K6pIEbVJTvdntjT6oxG9gVg/vFRSNLY5cq9k7AVgOejY8C+2a6Jj9xncFt3RsnWwadiKtNYw==",
+        "requested": "[1.65.68, )",
+        "resolved": "1.65.68",
+        "contentHash": "m9T37lAzkKxAbnj3PkKQ9irRC0CvL8P2tuE2UzRyEsaaWMZZXIDHmSqjs4RDN4URnvT8iFfp3/1TLPUi4cwtXg==",
         "dependencies": {
           "Microsoft.Testing.Extensions.CodeCoverage": "18.10.0",
           "Microsoft.Testing.Extensions.Telemetry": "2.3.3",
           "Microsoft.Testing.Extensions.TrxReport": "2.3.3",
-          "TUnit.Assertions": "1.65.31",
-          "TUnit.Engine": "1.65.31"
+          "TUnit.Assertions": "1.65.68",
+          "TUnit.Engine": "1.65.68"
         }
       },
       "BouncyCastle.Cryptography": {
@@ -199,23 +199,23 @@
       },
       "TUnit.Assertions": {
         "type": "Transitive",
-        "resolved": "1.65.31",
-        "contentHash": "Jwu8qbhi1HC94JTCDnjnHFWxg6OetHDDz/HeQVnVlH7sVjw08sWvBWJcnGL1wY1XPskZKz+XHkFBEWMRWMWjoQ=="
+        "resolved": "1.65.68",
+        "contentHash": "9k88ue1cG4Gt2M2le3VQrdWK3ngTxSXdnXshvsVr3jeH80ZmBTGIZ5K5EdZpIkdca6j10pcMmJSHuFhkSz85Nw=="
       },
       "TUnit.Core": {
         "type": "Transitive",
-        "resolved": "1.65.31",
-        "contentHash": "QhkHy3oKJVbrSAwPhyVllnCE9WNs2Yef/ANysT/J3Bf/ARgjVmqEwT3sGde4kv5mChMjbQoxr/aqN2vCvus+xA=="
+        "resolved": "1.65.68",
+        "contentHash": "5uE6TGXwY/ozRgz5qNLK+n6XGfS2tgG8AA2loA1YilBZTMgbnv2QoPdyBPS4f/uQQZ1sclCq7zdF1aUQkDxNug=="
       },
       "TUnit.Engine": {
         "type": "Transitive",
-        "resolved": "1.65.31",
-        "contentHash": "z7DBjCN8Tfe1IwO7yTbFnBX2bapObTPPVz+nneMVXuTzEM9ZxrRiurTO0oZaRa87CaENYbQ+BHNsnxwjZ4IhMg==",
+        "resolved": "1.65.68",
+        "contentHash": "1D0LcIzrz7th8AP8vHGK/5vWsxa4QnJurMRGuo6y+vzDePkfCRXGGirLd7Cty8Bs87dIFaiRI9AvAKWDzkOHuQ==",
         "dependencies": {
           "Microsoft.Testing.Extensions.TrxReport.Abstractions": "2.3.3",
           "Microsoft.Testing.Platform": "2.3.3",
           "Microsoft.Testing.Platform.MSBuild": "2.3.3",
-          "TUnit.Core": "1.65.31"
+          "TUnit.Core": "1.65.68"
         }
       },
       "albuskavaliro.traceableldapclient": {
@@ -281,15 +281,15 @@
       },
       "TUnit": {
         "type": "Direct",
-        "requested": "[1.65.31, )",
-        "resolved": "1.65.31",
-        "contentHash": "UiaD1GWXCitZU0K6pIEbVJTvdntjT6oxG9gVg/vFRSNLY5cq9k7AVgOejY8C+2a6Jj9xncFt3RsnWwadiKtNYw==",
+        "requested": "[1.65.68, )",
+        "resolved": "1.65.68",
+        "contentHash": "m9T37lAzkKxAbnj3PkKQ9irRC0CvL8P2tuE2UzRyEsaaWMZZXIDHmSqjs4RDN4URnvT8iFfp3/1TLPUi4cwtXg==",
         "dependencies": {
           "Microsoft.Testing.Extensions.CodeCoverage": "18.10.0",
           "Microsoft.Testing.Extensions.Telemetry": "2.3.3",
           "Microsoft.Testing.Extensions.TrxReport": "2.3.3",
-          "TUnit.Assertions": "1.65.31",
-          "TUnit.Engine": "1.65.31"
+          "TUnit.Assertions": "1.65.68",
+          "TUnit.Engine": "1.65.68"
         }
       },
       "BouncyCastle.Cryptography": {
@@ -461,24 +461,24 @@
       },
       "TUnit.Assertions": {
         "type": "Transitive",
-        "resolved": "1.65.31",
-        "contentHash": "Jwu8qbhi1HC94JTCDnjnHFWxg6OetHDDz/HeQVnVlH7sVjw08sWvBWJcnGL1wY1XPskZKz+XHkFBEWMRWMWjoQ=="
+        "resolved": "1.65.68",
+        "contentHash": "9k88ue1cG4Gt2M2le3VQrdWK3ngTxSXdnXshvsVr3jeH80ZmBTGIZ5K5EdZpIkdca6j10pcMmJSHuFhkSz85Nw=="
       },
       "TUnit.Core": {
         "type": "Transitive",
-        "resolved": "1.65.31",
-        "contentHash": "QhkHy3oKJVbrSAwPhyVllnCE9WNs2Yef/ANysT/J3Bf/ARgjVmqEwT3sGde4kv5mChMjbQoxr/aqN2vCvus+xA=="
+        "resolved": "1.65.68",
+        "contentHash": "5uE6TGXwY/ozRgz5qNLK+n6XGfS2tgG8AA2loA1YilBZTMgbnv2QoPdyBPS4f/uQQZ1sclCq7zdF1aUQkDxNug=="
       },
       "TUnit.Engine": {
         "type": "Transitive",
-        "resolved": "1.65.31",
-        "contentHash": "z7DBjCN8Tfe1IwO7yTbFnBX2bapObTPPVz+nneMVXuTzEM9ZxrRiurTO0oZaRa87CaENYbQ+BHNsnxwjZ4IhMg==",
+        "resolved": "1.65.68",
+        "contentHash": "1D0LcIzrz7th8AP8vHGK/5vWsxa4QnJurMRGuo6y+vzDePkfCRXGGirLd7Cty8Bs87dIFaiRI9AvAKWDzkOHuQ==",
         "dependencies": {
           "Microsoft.Testing.Extensions.TrxReport.Abstractions": "2.3.3",
           "Microsoft.Testing.Platform": "2.3.3",
           "Microsoft.Testing.Platform.MSBuild": "2.3.3",
           "System.Threading.Channels": "9.0.0",
-          "TUnit.Core": "1.65.31"
+          "TUnit.Core": "1.65.68"
         }
       },
       "albuskavaliro.traceableldapclient": {
@@ -544,15 +544,15 @@
       },
       "TUnit": {
         "type": "Direct",
-        "requested": "[1.65.31, )",
-        "resolved": "1.65.31",
-        "contentHash": "UiaD1GWXCitZU0K6pIEbVJTvdntjT6oxG9gVg/vFRSNLY5cq9k7AVgOejY8C+2a6Jj9xncFt3RsnWwadiKtNYw==",
+        "requested": "[1.65.68, )",
+        "resolved": "1.65.68",
+        "contentHash": "m9T37lAzkKxAbnj3PkKQ9irRC0CvL8P2tuE2UzRyEsaaWMZZXIDHmSqjs4RDN4URnvT8iFfp3/1TLPUi4cwtXg==",
         "dependencies": {
           "Microsoft.Testing.Extensions.CodeCoverage": "18.10.0",
           "Microsoft.Testing.Extensions.Telemetry": "2.3.3",
           "Microsoft.Testing.Extensions.TrxReport": "2.3.3",
-          "TUnit.Assertions": "1.65.31",
-          "TUnit.Engine": "1.65.31"
+          "TUnit.Assertions": "1.65.68",
+          "TUnit.Engine": "1.65.68"
         }
       },
       "BouncyCastle.Cryptography": {
@@ -718,23 +718,23 @@
       },
       "TUnit.Assertions": {
         "type": "Transitive",
-        "resolved": "1.65.31",
-        "contentHash": "Jwu8qbhi1HC94JTCDnjnHFWxg6OetHDDz/HeQVnVlH7sVjw08sWvBWJcnGL1wY1XPskZKz+XHkFBEWMRWMWjoQ=="
+        "resolved": "1.65.68",
+        "contentHash": "9k88ue1cG4Gt2M2le3VQrdWK3ngTxSXdnXshvsVr3jeH80ZmBTGIZ5K5EdZpIkdca6j10pcMmJSHuFhkSz85Nw=="
       },
       "TUnit.Core": {
         "type": "Transitive",
-        "resolved": "1.65.31",
-        "contentHash": "QhkHy3oKJVbrSAwPhyVllnCE9WNs2Yef/ANysT/J3Bf/ARgjVmqEwT3sGde4kv5mChMjbQoxr/aqN2vCvus+xA=="
+        "resolved": "1.65.68",
+        "contentHash": "5uE6TGXwY/ozRgz5qNLK+n6XGfS2tgG8AA2loA1YilBZTMgbnv2QoPdyBPS4f/uQQZ1sclCq7zdF1aUQkDxNug=="
       },
       "TUnit.Engine": {
         "type": "Transitive",
-        "resolved": "1.65.31",
-        "contentHash": "z7DBjCN8Tfe1IwO7yTbFnBX2bapObTPPVz+nneMVXuTzEM9ZxrRiurTO0oZaRa87CaENYbQ+BHNsnxwjZ4IhMg==",
+        "resolved": "1.65.68",
+        "contentHash": "1D0LcIzrz7th8AP8vHGK/5vWsxa4QnJurMRGuo6y+vzDePkfCRXGGirLd7Cty8Bs87dIFaiRI9AvAKWDzkOHuQ==",
         "dependencies": {
           "Microsoft.Testing.Extensions.TrxReport.Abstractions": "2.3.3",
           "Microsoft.Testing.Platform": "2.3.3",
           "Microsoft.Testing.Platform.MSBuild": "2.3.3",
-          "TUnit.Core": "1.65.31"
+          "TUnit.Core": "1.65.68"
         }
       },
       "albuskavaliro.traceableldapclient": {
