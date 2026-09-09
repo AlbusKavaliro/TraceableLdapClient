@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup Label="Microsoft">
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
-    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.9.0" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.10.0" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.9.0" />
     <PackageVersion Include="System.DirectoryServices.Protocols" Version="10.0.12" />
   </ItemGroup>
