@@ -11,17 +11,17 @@
     <PackageVersion Include="System.DirectoryServices.Protocols" Version="10.0.12" />
   </ItemGroup>
   <ItemGroup Label="OpenTelemetry">
-    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.19.0" />
-    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.19.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.19.1" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.19.1" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.19.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.18.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.19.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.19.0" />
   </ItemGroup>
   <ItemGroup Label="Test">
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.2" />
     <PackageVersion Include="Microsoft.Testing.Extensions.CrashDump" Version="2.4.1" />
     <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.4.1" />
-    <PackageVersion Include="TUnit" Version="1.68.17" />
+    <PackageVersion Include="TUnit" Version="1.72.10" />
     <PackageVersion Include="Testcontainers" Version="4.15.0" />
   </ItemGroup>
 </Project>
