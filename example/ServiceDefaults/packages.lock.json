@@ -14,11 +14,11 @@
       },
       "Microsoft.Extensions.ServiceDiscovery": {
         "type": "Direct",
-        "requested": "[10.11.0, )",
-        "resolved": "10.11.0",
-        "contentHash": "l1jvoPCZYEZOE2JZzcnzHLo1BBN/s+Azj8+FX0WRbqHoJY7QVq7cvTHasDWi1pixr0dXxbyC4HKt68Xm2KKpqQ==",
+        "requested": "[10.11.1, )",
+        "resolved": "10.11.1",
+        "contentHash": "N+1ANg9xXsX973s37sjsH94SZwq58J1SvtoVxw1wDbdn1Z1F2AfNPmwyJa1DidjhoYtP4LolNg0usVN4UPmkMA==",
         "dependencies": {
-          "Microsoft.Extensions.ServiceDiscovery.Abstractions": "10.11.0"
+          "Microsoft.Extensions.ServiceDiscovery.Abstractions": "10.11.1"
         }
       },
       "OpenTelemetry.Exporter.OpenTelemetryProtocol": {
@@ -107,8 +107,8 @@
       },
       "Microsoft.Extensions.ServiceDiscovery.Abstractions": {
         "type": "Transitive",
-        "resolved": "10.11.0",
-        "contentHash": "QzST85xtGR86sXg9kI8f4/+ziBo/B1JC93IEoMmy2g03vaxZZuxmmPrrWX6QeL4Knb1IzouXLyXWppx77tUPYg=="
+        "resolved": "10.11.1",
+        "contentHash": "BYo9+FAaQmKMGY3GSugoOtQM0m2oGl0IECdXfp4stSA9vRb3pjtVrTi7I4PkBEj6Xsr6ecPbYzcsbrLYzXj/pQ=="
       },
       "Microsoft.Extensions.Telemetry": {
         "type": "Transitive",
@@ -184,11 +184,11 @@
       },
       "Microsoft.Extensions.ServiceDiscovery": {
         "type": "Direct",
-        "requested": "[10.11.0, )",
-        "resolved": "10.11.0",
-        "contentHash": "l1jvoPCZYEZOE2JZzcnzHLo1BBN/s+Azj8+FX0WRbqHoJY7QVq7cvTHasDWi1pixr0dXxbyC4HKt68Xm2KKpqQ==",
+        "requested": "[10.11.1, )",
+        "resolved": "10.11.1",
+        "contentHash": "N+1ANg9xXsX973s37sjsH94SZwq58J1SvtoVxw1wDbdn1Z1F2AfNPmwyJa1DidjhoYtP4LolNg0usVN4UPmkMA==",
         "dependencies": {
-          "Microsoft.Extensions.ServiceDiscovery.Abstractions": "10.11.0"
+          "Microsoft.Extensions.ServiceDiscovery.Abstractions": "10.11.1"
         }
       },
       "OpenTelemetry.Exporter.OpenTelemetryProtocol": {
@@ -277,8 +277,8 @@
       },
       "Microsoft.Extensions.ServiceDiscovery.Abstractions": {
         "type": "Transitive",
-        "resolved": "10.11.0",
-        "contentHash": "QzST85xtGR86sXg9kI8f4/+ziBo/B1JC93IEoMmy2g03vaxZZuxmmPrrWX6QeL4Knb1IzouXLyXWppx77tUPYg=="
+        "resolved": "10.11.1",
+        "contentHash": "BYo9+FAaQmKMGY3GSugoOtQM0m2oGl0IECdXfp4stSA9vRb3pjtVrTi7I4PkBEj6Xsr6ecPbYzcsbrLYzXj/pQ=="
       },
       "Microsoft.Extensions.Telemetry": {
         "type": "Transitive",
